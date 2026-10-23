@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate - تطبيق الترفيه الحصري</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+            padding: 30px 0;
+        }
+
+        /* ===== الإطار الرئيسي ===== */
+        .glow-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 92%;
+            max-width: 720px;
+            padding: 4px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #ff0000, #ff4444, #ffffff, #ff0000, #cc0000);
+            box-shadow:
+                0 0 30px rgba(255, 0, 0, 0.4),
+                0 0 60px rgba(255, 0, 0, 0.2),
+                0 0 100px rgba(255, 0, 0, 0.1);
+        }
+
+        /* ===== المحتوى الداخلي ===== */
+        .content-box {
+            background: linear-gradient(145deg, #111111 0%, #1a0000 50%, #0d0d0d 100%);
+            border-radius: 20px;
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ===== صورة الشعار ===== */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-container img {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+            border-radius: 20px;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
+        }
+
+        /* ===== العنوان ===== */
+        .title {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+            line-height: 1.8;
+        }
+
+        .title .red { color: #ff3333; }
+        .title .app-name {
+            color: #ff4444;
+            font-size: 1.9rem;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        /* ===== الخط الفاصل ===== */
+        .divider {
+            width: 85%;
+            height: 2px;
+            margin: 15px auto;
+            background: linear-gradient(90deg, transparent, #ff0000, #ffffff, #ff0000, transparent);
+            border-radius: 2px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .divider-sm {
+            width: 60%;
+            height: 1px;
+            margin: 12px auto;
+            background: linear-gradient(90deg, transparent, rgba(255,0,0,0.4), transparent);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== النصوص ===== */
+        .section {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 15px;
+        }
+
+        .intro-text {
+            color: #e0e0e0;
+            font-size: 0.98rem;
+            line-height: 2;
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 0, 0, 0.04);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 0, 0, 0.1);
+        }
+
+        .intro-text .hl { color: #ff4444; font-weight: 700; }
+        .intro-text .wh { color: #ffffff; font-weight: 700; }
+
+        /* ===== عنوان القسم ===== */
+        .section-title {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #ff3333;
+            margin-bottom: 12px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        /* ===== الباقات ===== */
+        .packages {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .package-card {
+            background: linear-gradient(135deg, rgba(255,0,0,0.08), rgba(255,255,255,0.03));
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 14px;
+            padding: 18px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card.popular {
+            border-color: rgba(255, 68, 68, 0.5);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
+        }
+
+        .package-card.popular::before {
+            content: '⭐ الأكثر طلباً';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: linear-gradient(135deg, #ff0000, #ff4444);
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .package-card.lifetime::before {
+            content: '💎 توفير دائم';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #111;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .package-name {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .package-detail {
+            color: #bbb;
+            font-size: 0.88rem;
+            line-height: 1.8;
+        }
+
+        .package-detail .dur { color: #00e5ff; font-weight: 700; }
+        .package-detail .price { color: #ff4444; font-weight: 900; font-size: 1.15rem; }
+        .package-detail .currency { color: #ff6666; font-weight: 700; font-size: 0.85rem; }
+
+        /* ===== لماذا Ultimate ===== */
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border-right: 3px solid;
+        }
+
+        .feature-item:nth-child(1) { border-color: #ff4444; }
+        .feature-item:nth-child(2) { border-color: #00e5ff; }
+        .feature-item:nth-child(3) { border-color: #76ff03; }
+
+        .feature-item i {
+            font-size: 1.3rem;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        .feature-item:nth-child(1) i { color: #ff4444; }
+        .feature-item:nth-child(2) i { color: #00e5ff; }
+        .feature-item:nth-child(3) i { color: #76ff03; }
+
+        .feature-text {
+            color: #d0d0d0;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .feature-text strong {
+            color: #ffffff;
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            margin-top: 10px;
+        }
+
+        .cta-text {
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 2;
+            margin-bottom: 15px;
+        }
+
+        .cta-text .hl { color: #ff4444; }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 14px 35px;
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.3);
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .whatsapp-btn i {
+            font-size: 1.5rem;
+        }
+
+        .cta-sub {
+            color: #888;
+            font-size: 0.82rem;
+            margin-top: 10px;
+        }
+
+        /* ===== أيقونات سفلية ===== */
+        .bottom-icons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .bottom-icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .bottom-icon-item i {
+            font-size: 1.5rem;
+            filter: drop-shadow(0 0 6px currentColor);
+        }
+
+        .bottom-icon-item span {
+            font-size: 0.68rem;
+            color: #888;
+        }
+
+        .bi-1 i { color: #ff5252; }
+        .bi-2 i { color: #448aff; }
+        .bi-3 i { color: #69f0ae; }
+        .bi-4 i { color: #ffd740; }
+
+        /* ===== التجاوب ===== */
+        @media (max-width: 500px) {
+            .content-box { padding: 25px 16px; }
+            .title { font-size: 1.25rem; }
+            .title .app-name { font-size: 1.5rem; }
+            .intro-text { font-size: 0.88rem; padding: 12px; }
+            .logo-container img { width: 120px; height: 120px; }
+            .package-card { padding: 14px 12px; }
+            .whatsapp-btn { padding: 12px 25px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الإطار -->
+    <div class="glow-wrapper">
+        <div class="content-box">
+
+            <!-- صورة الشعار -->
+            <div class="logo-container">
+                <img src="https://g.top4top.io/p_39227n16z0.png" alt="Ultimate Logo">
+            </div>
+
+            <!-- العنوان -->
+            <h1 class="title">
+                📺 استمتع بعالم الترفيه بلا حدود<br>
+                مع تطبيق <span class="app-name">Ultimate</span> <span class="red">الحصري!</span> 🚀
+            </h1>
+
+            <div class="divider"></div>
+
+            <!-- المقدمة -->
+            <div class="section">
+                <div class="intro-text">
+                    هل تبحث عن <span class="hl">تجربة مشاهدة فريدة</span> ومميزة؟<br>
+                    نقدم لك تطبيق <span class="wh">Ultimate</span> الخاص بك وحدك!<br><br>
+                    نحن لا نقدم مجرد اشتراك عادٍ، بل نمنحك <span class="hl">تطبيقاً مخصصاً بالكامل</span> وبشكل خاص لكل عميل، لضمان تجربة استخدام <span class="wh">فريدة، آمنة، وسلسة</span> تليق بك. 🎬✨
+                </div>
+            </div>
+
+            <div class="divider-sm"></div>
+
+            <!-- الباقات -->
+            <div class="section">
+                <div class="section-title">🔥 الباقات المتاحة</div>
+                <div class="packages">
+                    <div class="package-card popular">
+                        <div class="package-name">📅 الباقة السنوية</div>
+                        <div class="package-detail">
+                            المدة: <span class="dur">سنة كاملة (12 شهراً)</span><br>
+                            السعر: <span class="price">100</span> <span class="currency">جنيه فقط!</span>
+                        </div>
+                    </div>
+                    <div class="package-card lifetime">
+                        <div class="package-name">♾️ باقة مدى الحياة</div>
+                        <div class="package-detail">
+                            المدة: <span class="dur">مدى الحياة (اشتراك لمرة واحدة ومتابعة بلا حدود)</span><br>
+                            السعر: <span class="price">250</span> <span class="currency">جنيه فقط!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-sm"></div>
+
+            <!-- لماذا Ultimate -->
+            <div class="section">
+                <div class="section-title">🌟 لماذا تطبيق Ultimate؟</div>
+                <div class="features">
+                    <div class="feature-item">
+                        <i class="fas fa-user-lock"></i>
+                        <div class="feature-text">
+                            <strong>تطبيق خاص بك:</strong> يتم تخصيص التطبيق وتهئته خصيصاً لكل عميل لخصوصية وراحة أكبر.
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-film"></i>
+                        <div class="feature-text">
+                            <strong>محتوى متنوع وضخم:</strong> يضم أحدث الأفلام، المسلسلات، والقنوات المفضلة لديك بجودة عالية.
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-headset"></i>
+                        <div class="feature-text">
+                            <strong>دعم فني مستمر:</strong> لنكون معك خطوة بخطوة طوال فترة اشتراكك.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- CTA -->
+            <div class="cta-section">
+                <div class="cta-text">
+                    📲 <span class="hl">لا تفوت الفرصة</span>، واحصل على تطبيقك الخاص الآن!
+                </div>
+                <a href="https://wa.link/1vbjsv" target="_blank" class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i>
+                    تواصل معنا عبر واتساب
+                </a>
+                <div class="cta-sub">للاشتراك أو الاستفسار، يسعدنا التواصل معنا عبر الرسائل الخاصة أو واتساب</div>
+            </div>
+
+            <!-- أيقونات سفلية -->
+            <div class="bottom-icons">
+                <div class="bottom-icon-item bi-1">
+                    <i class="fas fa-tv"></i>
+                    <span>ترفيه</span>
+                </div>
+                <div class="bottom-icon-item bi-2">
+                    <i class="fas fa-film"></i>
+                    <span>أفلام</span>
+                </div>
+                <div class="bottom-icon-item bi-3">
+                    <i class="fas fa-satellite-dish"></i>
+                    <span>قنوات</span>
+                </div>
+                <div class="bottom-icon-item bi-4">
+                    <i class="fas fa-crown"></i>
+                    <span>حصري</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
